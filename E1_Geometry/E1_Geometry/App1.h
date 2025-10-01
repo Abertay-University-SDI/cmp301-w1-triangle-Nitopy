@@ -24,6 +24,7 @@ protected:
 private:
 	ColourShader* colourShader;
 	ColourTriangle* mesh;
+	QuadMesh* meshQ;
 };
 
 #endif

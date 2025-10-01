@@ -15,6 +15,7 @@ void App1::init(HINSTANCE hinstance, HWND hwnd, int screenWidth, int screenHeigh
 
 	// Create Mesh object
 	mesh = new ColourTriangle(renderer->getDevice(), renderer->getDeviceContext());
+	meshQ = new QuadMesh(renderer->getDevice(), renderer->getDeviceContext());
 
 	colourShader = new ColourShader(renderer->getDevice(), hwnd);
 
@@ -31,6 +32,12 @@ App1::~App1()
 	{
 		delete mesh;
 		mesh = 0;
+	}
+
+	if (meshQ)
+	{
+		delete meshQ;
+		meshQ = 0;
 	}
 
 	if (colourShader)
@@ -75,10 +82,15 @@ bool App1::render()
 	XMMATRIX projectionMatrix = renderer->getProjectionMatrix();
 
 	// Send geometry data (from mesh), send shader pararmeters and render geometry with set shaders
+	/*
 	mesh->sendData(renderer->getDeviceContext());
 	colourShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix, viewMatrix, projectionMatrix);
 	colourShader->render(renderer->getDeviceContext(), mesh->getIndexCount());
-
+	*/
+	meshQ->sendData(renderer->getDeviceContext());
+	colourShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix, viewMatrix, projectionMatrix);
+	colourShader->render(renderer->getDeviceContext(), meshQ->getIndexCount());
+	
 	// Render GUI
 	gui();
 
